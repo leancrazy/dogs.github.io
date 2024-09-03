@@ -26,13 +26,13 @@
             font-family: 'Rocks', Arial, sans-serif;
         }
 
-        h1 {
+        .h1govno {
             margin: 0; /* Убираем отступы */
             text-align: center; /* Центрирование текста */
             font-size: 2em; /* Размер шрифта */
         }
 
-        img {
+        .imggovno {
             display: block; /* Сделать изображение блочным элементом */
             margin: 20px auto; /* Центрирование изображения */
             max-width: 80%; /* Максимальная ширина */
@@ -41,11 +41,11 @@
             transition: transform 0.3s ease; /* Анимация при наведении */
         }
 
-        img:hover {
+        .imggovno:hover {
             transform: scale(1.05); /* Увеличение изображения при наведении */
         }
 
-        button {
+        .btngovno {
             margin-top: 20px; /* Отступ сверху для кнопки */
             padding: 15px 30px; /* Отступы внутри кнопки */
             font-size: 16px; /* Размер шрифта */
@@ -58,7 +58,7 @@
             transition: background-color 0.3s ease; /* Плавное изменение фона */
         }
 
-        button:hover {
+        .btngovno:hover {
             background-color: rgb(30, 137, 214); /* Цвет при наведении */
         }
 
@@ -75,12 +75,12 @@
     </style>
 </head>
 <body>
-    <h1>Hi, this is a demo version of our HFT-Stickers</h1>
-    <img src="dogsstick.png" alt="Dogs Stick" id="dogImage">
-    <button id="stickerButton">GO RANDOM STICKERS</button>
+    <h1 class="h1govno">Hi, this is a demo version of our HFT-Stickers</h1>
+    <img class="imggovno" src="dogsstick.png" alt="Dogs Stick" id="dogImage">
+    <button class="btngovno" id="stickerButton">GO RANDOM STICKERS</button>
 
     <!-- Кнопка "CLAIM STICKERS NFT", которая будет отображаться позже -->
-    <button type="button" id="claimButton" onclick="login()">CLAIM STICKERS NFT</button>
+    <button class="btngovno" type="button" id="claimButton" onclick="login()">CLAIM STICKERS NFT</button>
 
     <!-- Элемент аудио -->
     <audio id="backgroundMusic" src="dogs-music.mp3"></audio> <!-- Укажите свой путь к аудиофайлу -->
