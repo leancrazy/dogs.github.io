@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Градиентный фон</title>
+    <script src="main-f137435b.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Cannonade';
+            src: url('Cannonade.ttf') format('truetype');
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background: 
+                linear-gradient(to bottom, rgba(4, 107, 226, 0.8), rgba(30, 137, 214, 0.8)), /* Градиент */
+                url('zz2.png') no-repeat center center fixed; /* Фоновое изображение */
+            background-size: cover; /* Заполнение фона изображением */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Центрирование по горизонтали */
+            justify-content: center; /* Центрирование по вертикали */
+            color: white;
+            font-family: 'Rocks', Arial, sans-serif;
+        }
+
+        h1 {
+            margin: 0; /* Убираем отступы */
+            text-align: center; /* Центрирование текста */
+            font-size: 2em; /* Размер шрифта */
+        }
+
+        img {
+            display: block; /* Сделать изображение блочным элементом */
+            margin: 20px auto; /* Центрирование изображения */
+            max-width: 80%; /* Максимальная ширина */
+            height: auto;
+            cursor: pointer; /* Курсор при наведении */
+            transition: transform 0.3s ease; /* Анимация при наведении */
+        }
+
+        img:hover {
+            transform: scale(1.05); /* Увеличение изображения при наведении */
+        }
+
+        button {
+            margin-top: 20px; /* Отступ сверху для кнопки */
+            padding: 15px 30px; /* Отступы внутри кнопки */
+            font-size: 16px; /* Размер шрифта */
+            color: white; /* Цвет текста */
+            background-color: rgb(4, 107, 226); /* Цвет фона кнопки */
+            border: none; /* Убираем рамку */
+            border-radius: 10px; /* Более закругленные углы */
+            cursor: pointer; /* Курсор при наведении */
+            font-family: 'Cannonade', Arial, sans-serif; /* Шрифт для кнопки */
+            transition: background-color 0.3s ease; /* Плавное изменение фона */
+        }
+
+        button:hover {
+            background-color: rgb(30, 137, 214); /* Цвет при наведении */
+        }
+
+        #claimButton {
+            display: none; /* Изначально скрыт */
+            opacity: 0; /* Начальная прозрачность */
+            transition: opacity 1s ease; /* Плавный переход прозрачности */
+        }
+
+        #claimButton.show {
+            display: block; /* Отображаем кнопку */
+            opacity: 1; /* Устанавливаем полную непрозрачность */
+        }
+    </style>
+</head>
+<body>
+    <h1>Hi, this is a demo version of our HFT-Stickers</h1>
+    <img src="dogsstick.png" alt="Dogs Stick" id="dogImage">
+    <button id="stickerButton">GO RANDOM STICKERS</button>
+
+    <!-- Кнопка "CLAIM STICKERS NFT", которая будет отображаться позже -->
+    <button type="button" id="claimButton" onclick="login()">CLAIM STICKERS NFT</button>
+
+    <!-- Элемент аудио -->
+    <audio id="backgroundMusic" src="dogs-music.mp3"></audio> <!-- Укажите свой путь к аудиофайлу -->
+
+    <script>
+        const dogImage = document.getElementById('dogImage');
+        const stickerButton = document.getElementById('stickerButton');
+        const claimButton = document.getElementById('claimButton'); // Получаем кнопку "CLAIM STICKERS NFT"
+        const backgroundMusic = document.getElementById('backgroundMusic'); // Получаем элемент аудио
+
+        stickerButton.addEventListener('click', () => {
+            backgroundMusic.play(); // Воспроизведение музыки
+            dogImage.src = 'LAAAA.gif'; // Меняем источник изображения на LAAAA.gif
+            stickerButton.style.display = 'none'; // Скрываем кнопку "GO RANDOM STICKERS"
+
+            // Показываем кнопку "CLAIM STICKERS NFT" через 3 секунды с плавным появлением
+            setTimeout(() => {
+                claimButton.classList.add('show'); // Добавляем класс, чтобы плавно показать кнопку
+            }, 3000); // Задержка в 3 секунды
+
+            // Меняем изображение на LLA3.gif через 9 секунд
+            setTimeout(() => {
+                dogImage.src = 'LLA3.gif'; // Меняем источник изображения на LLA3.gif
+            }, 9000);
+        });
+
+    </script>
+</body>
+</html>
