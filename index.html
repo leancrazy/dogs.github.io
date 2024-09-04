@@ -10,7 +10,6 @@
             font-family: 'Cannonade';
             src: url('Cannonade.ttf') format('truetype');
         }
-
         body {
             margin: 0;
             height: 100vh;
@@ -24,89 +23,164 @@
             justify-content: center; /* Центрирование по вертикали */
             color: white;
             font-family: 'Rocks', Arial, sans-serif;
+            overflow: hidden; /* Скрываем полосы прокрутки */
         }
 
-        .h1govno {
+        h1 {
             margin: 0; /* Убираем отступы */
             text-align: center; /* Центрирование текста */
-            font-size: 2em; /* Размер шрифта */
+            font-size: 24px; /* Размер шрифта */
+            white-space: nowrap; /* Запрещаем перенос текста */
+            overflow: hidden; /* Скрываем текст, выходящий за пределы */
+            border-right: 0.15em solid orange; /* Эффект курсора печати */
+            width: 0; /* Начальная ширина 0 для эффекта печати */
+            animation: typing 4s steps(40, end) infinite, blink-caret 0.75s step-end infinite; /* Анимация печати и мигания */
+            transition: font-size 0.5s ease; /* Плавный переход для изменения размера шрифта */
         }
 
-        .imggovno {
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: orange; }
+        }
+
+        img {
             display: block; /* Сделать изображение блочным элементом */
             margin: 20px auto; /* Центрирование изображения */
-            max-width: 80%; /* Максимальная ширина */
+            max-width: 100%;
             height: auto;
             cursor: pointer; /* Курсор при наведении */
-            transition: transform 0.3s ease; /* Анимация при наведении */
+            position: relative;
+            transition: opacity 0.5s ease; /* Добавляем плавную анимацию */
         }
 
-        .imggovno:hover {
-            transform: scale(1.05); /* Увеличение изображения при наведении */
+        .smaller { /* Класс для уменьшения размера */
+            transform: scale(0.5); /* Изменяем размер изображения в два раза */
         }
 
-        .btngovno {
-            margin-top: 20px; /* Отступ сверху для кнопки */
-            padding: 15px 30px; /* Отступы внутри кнопки */
-            font-size: 16px; /* Размер шрифта */
-            color: white; /* Цвет текста */
-            background-color: rgb(4, 107, 226); /* Цвет фона кнопки */
-            border: none; /* Убираем рамку */
-            border-radius: 10px; /* Более закругленные углы */
-            cursor: pointer; /* Курсор при наведении */
-            font-family: 'Cannonade', Arial, sans-serif; /* Шрифт для кнопки */
-            transition: background-color 0.3s ease; /* Плавное изменение фона */
+        .btn { /* Класс для кнопки */
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 16px;
+            color: white;
+            background-color: rgb(4, 107, 226);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Cannonade', Arial, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .btngovno:hover {
-            background-color: rgb(30, 137, 214); /* Цвет при наведении */
+        .btn:hover {
+            background-color: rgb(30, 137, 214);
         }
 
-        #claimButton {
-            display: none; /* Изначально скрыт */
-            opacity: 0; /* Начальная прозрачность */
-            transition: opacity 1s ease; /* Плавный переход прозрачности */
+        @keyframes scroll {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0; /* Скрыть изображение */
+            }
+            100% {
+                opacity: 1; /* Показать новое изображение */
+            }
         }
 
-        #claimButton.show {
-            display: block; /* Отображаем кнопку */
-            opacity: 1; /* Устанавливаем полную непрозрачность */
+        .scroll {
+            animation: scroll 0.5s ease; /* Применяем анимацию */
         }
     </style>
 </head>
 <body>
-    <h1 class="h1govno">Hi, this is a demo version of our HFT-Stickers</h1>
-    <img class="imggovno" src="dogsstick.png" alt="Dogs Stick" id="dogImage">
-    <button class="btngovno" id="stickerButton">GO RANDOM STICKERS</button>
+    <!-- Заголовок с начальным текстом -->
+    <h1 id="mainTitle">Hi, this is a demo version of our HFT-Stickers</h1>
+    
+    <img src="dogsstick.png" alt="Dogs Stick" id="dogImage" class="scroll">
 
-    <!-- Кнопка "CLAIM STICKERS NFT", которая будет отображаться позже -->
-    <button class="btngovno" type="button" id="claimButton" onclick="login()">CLAIM STICKERS NFT</button>
+    <!-- Кнопка рулетки -->
+    <button id="stickerButton" class="btn">GO RANDOM STICKERS</button>
+    
+    <!-- Кнопка CONNECT WALLET в body -->
+    <button class="btn" id="connectButton" onclick="login()" style="display: none;">CONNECT WALLET</button>
 
-    <!-- Элемент аудио -->
-    <audio id="backgroundMusic" src="dogs-music.mp3"></audio> <!-- Укажите свой путь к аудиофайлу -->
+    <audio id="smsSound" src="sms.mp3"></audio> <!-- Добавляем тег audio -->
+    <audio id="dogsSound" src="dogs3.mp3"></audio> <!-- Убираем autoplay и loop -->
+    <audio id="scrollSound" src="scroll.mp3"></audio> <!-- Звук скроллинга -->
 
     <script>
+        const mainTitle = document.getElementById('mainTitle'); // Заголовок
         const dogImage = document.getElementById('dogImage');
         const stickerButton = document.getElementById('stickerButton');
-        const claimButton = document.getElementById('claimButton'); // Получаем кнопку "CLAIM STICKERS NFT"
-        const backgroundMusic = document.getElementById('backgroundMusic'); // Получаем элемент аудио
+        const connectButton = document.getElementById('connectButton'); // Кнопка CONNECT WALLET
+        const smsSound = document.getElementById('smsSound');
+        const dogsSound = document.getElementById('dogsSound');
+        const scrollSound = document.getElementById('scrollSound'); // Звук скроллинга
 
-        stickerButton.addEventListener('click', () => {
-            backgroundMusic.play(); // Воспроизведение музыки
-            dogImage.src = 'LAAAA.gif'; // Меняем источник изображения на LAAAA.gif
-            stickerButton.style.display = 'none'; // Скрываем кнопку "GO RANDOM STICKERS"
+        const images = [
+            'wow1.png', 'wow2.png', 'wow3.png', 'wow4.png', 'wow5.png',
+            'wow6.png', 'wow7.png', 'wow8.png', 'wow9.png', 'wow10.png',
+            'wow11.png', 'wow12.png', 'wow13.png'
+        ];
 
-            // Показываем кнопку "CLAIM STICKERS NFT" через 3 секунды с плавным появлением
-            setTimeout(() => {
-                claimButton.classList.add('show'); // Добавляем класс, чтобы плавно показать кнопку
-            }, 3000); // Задержка в 3 секунды
+        let currentIndex = 0;
+        let intervalId;
 
-            // Меняем изображение на LLA3.gif через 9 секунд
-            setTimeout(() => {
-                dogImage.src = 'LLA3.gif'; // Меняем источник изображения на LLA3.gif
-            }, 9000);
+        function changeImage() {
+            dogImage.src = images[currentIndex];
+            
+            if (currentIndex === 0 || (currentIndex >= 1 && currentIndex <= 12)) { 
+                dogImage.classList.add('smaller'); 
+            } else {
+                dogImage.classList.remove('smaller');
+            }
+
+            dogImage.classList.add('scroll');
+
+            setTimeout(function() {
+                dogImage.classList.remove('scroll'); 
+            }, 500);
+
+            currentIndex++;
+            if (currentIndex >= images.length) {
+                currentIndex = 0;
+            }
+        }
+
+        // Обработчик событий для кнопки рулетки
+        stickerButton.addEventListener('click', function() {
+            stickerButton.style.display = 'none'; // Скрываем кнопку рулетки
+            changeImage(); 
+            scrollSound.play(); // Воспроизводим звук скроллинга
+            dogsSound.play(); // Воспроизводим звук dogsSound
+            intervalId = setInterval(function() {
+                changeImage();
+                scrollSound.currentTime = 0; 
+                scrollSound.play(); 
+            }, 90);
+
+            setTimeout(function() {
+                clearInterval(intervalId);
+                scrollSound.pause(); 
+                dogsSound.pause(); // Останавливаем dogsSound
+                currentIndex = Math.floor(Math.random() * images.length);
+                changeImage(); 
+
+                smsSound.play();
+
+                connectButton.style.display = 'block'; // Показываем кнопку CONNECT WALLET
+
+                // Изменяем текст заголовка и размер шрифта
+                mainTitle.textContent = "To claim your reward connect wallet";
+                mainTitle.style.fontSize = '16px'; // Уменьшаем размер шрифта
+            }, 6000); 
         });
 
     </script>
+
 </body>
 </html>
