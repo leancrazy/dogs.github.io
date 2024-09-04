@@ -26,7 +26,7 @@
             overflow: hidden; /* Скрываем полосы прокрутки */
         }
 
-        h1 {
+        .h1govno {
             margin: 0; /* Убираем отступы */
             text-align: center; /* Центрирование текста */
             font-size: 24px; /* Размер шрифта */
@@ -48,7 +48,7 @@
             50% { border-color: orange; }
         }
 
-        img {
+        .imggovno {
             display: block; /* Сделать изображение блочным элементом */
             margin: 20px auto; /* Центрирование изображения */
             max-width: 100%;
@@ -98,9 +98,9 @@
 </head>
 <body>
     <!-- Заголовок с начальным текстом -->
-    <h1 id="mainTitle">Hi, this is a demo version of our HFT-Stickers</h1>
+    <h1 id="mainTitle" class="h1govno">Hi, this is a demo version of our HFT-Stickers</h1>
     
-    <img src="dogsstick.png" alt="Dogs Stick" id="dogImage" class="scroll">
+    <img src="dogsstick.png" class="imggovno" alt="Dogs Stick" id="dogImage" class="scroll">
 
     <!-- Кнопка рулетки -->
     <button id="stickerButton" class="btn">GO RANDOM STICKERS</button>
